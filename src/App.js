@@ -13,6 +13,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { SignalCellularNullOutlined } from '@material-ui/icons';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault()
     setTasks(tasks.concat(event.target.value))
+    
 
   }
   const handleToggle = (value) => () => {
@@ -54,7 +56,11 @@ function App() {
 
       <List className="todolist">
         {tasks.map((value) => {
+          if(value.value==null){
+            return(null)
+          }
           const labelId = `checkbox-list-label-${value}`;
+          
 
           return (
             <ListItem key={value} role={undefined} dense button onClick={handleToggle(value)}>
