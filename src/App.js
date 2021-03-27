@@ -15,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { SignalCellularNullOutlined } from '@material-ui/icons';
+import { TextField } from '@material-ui/core';
 
 
 function App() {
@@ -87,9 +88,9 @@ function App() {
       
       <h1>Things To Do</h1>
         <form method="post" onSubmit={handleSubmit}>
-          <input name='value' placeholder="enter new task">
-          </input>
-          <button type="submit">Add Task</button>
+          <TextField name='value' placeholder="enter new task" >
+          </TextField>
+          <Button type="submit" variant="contained">Add Task</Button>
         </form>
       
 
@@ -112,9 +113,9 @@ function App() {
       <List className="noteslist">
       <h1>Notes</h1>
       <form method="post" onSubmit={handleSubmitNote}>
-          <input name='value' placeholder="enter new note">
-          </input>
-          <button type="submit">Add Note</button>
+          <TextField name='value' placeholder="enter new note">
+          </TextField>
+          <Button type="submit" variant="contained">Add Note</Button>
         </form>
 
       {notes.map((value) => {
@@ -131,9 +132,9 @@ function App() {
                 <CommentIcon />
               </IconButton>
               <IconButton edge="center" aria-label="comments">
-
               <DeleteIcon />
                 </IconButton>
+                
             </ListItemSecondaryAction>
           </ListItem>
         );
