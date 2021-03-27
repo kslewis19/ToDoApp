@@ -130,6 +130,10 @@ function App() {
               <IconButton edge="end" aria-label="comments">
                 <CommentIcon />
               </IconButton>
+              <IconButton edge="center" aria-label="comments">
+
+              <DeleteIcon />
+                </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
         );

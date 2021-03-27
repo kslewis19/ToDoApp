@@ -14,6 +14,8 @@ import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { SignalCellularNullOutlined } from '@material-ui/icons';
+import { FiArrowDown} from "react-icons/fi";
+import {FiArrowUp} from "react-icons/fi";
 
 function TodoListItem (props) {
   const [text, setText] = useState(props.value.text)
@@ -46,8 +48,13 @@ function TodoListItem (props) {
         <CommentIcon />
         </IconButton>
         <IconButton edge="center" aria-label="comments">
-
           <DeleteIcon />
+        </IconButton>
+        <IconButton edge="center" aria-label="comments">
+        <FiArrowDown/>
+        </IconButton>
+        <IconButton edge="center" aria-label="comments">
+        <FiArrowUp/>
         </IconButton>
       </ListItemSecondaryAction>
       
