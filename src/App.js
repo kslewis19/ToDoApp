@@ -17,17 +17,22 @@ import { SignalCellularNullOutlined } from '@material-ui/icons';
 
 
 function App() {
-  const [tasks, setTasks] = useState([""])
+  const [tasks, setTasks] = useState([{}])
 
   const [checked, setChecked] = React.useState([0]);
 
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    setTasks(tasks.concat(event.target.value))
+    console.log(event.target.value)
+    setTasks(tasks.concat({
+      id: Math.floor(Math.random()*10000),
+      text: event.target.value.value
+    }))
     
-
+    
   }
+
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -44,26 +49,30 @@ function App() {
 
   return (
     <div className="app">
-      <div className="header">
+      
+
+      <List className="todolist">
+
+      
         <form method="post" onSubmit={handleSubmit}>
           <input name='value' placeholder="enter new task">
           </input>
           <button type="submit">Add Task</button>
         </form>
-      </div>
+      
 
-
-
-      <List className="todolist">
         {tasks.map((value) => {
-          if(value.value==null){
+          if(value.id==null){
             return(null)
           }
-          const labelId = `checkbox-list-label-${value}`;
+
+          //could add check filter here
+
+          const labelId = `checkbox-list-label-${value.id}`;
           
 
           return (
-            <ListItem key={value} role={undefined} dense button onClick={handleToggle(value)}>
+            <ListItem key={value.id} role={undefined} dense button onClick={handleToggle(value)}>
               <ListItemIcon>
                 <Checkbox
                   edge="start"
@@ -73,7 +82,7 @@ function App() {
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`${value.value}`} />
+              <ListItemText id={labelId} primary={`${value.text}`} />
               <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="comments">
                 <CommentIcon />
@@ -88,7 +97,31 @@ function App() {
           );
         })}
       </List>
+      <List className="noteslist">
+      {[0, 1, 2, 3].map((value) => {
+        const labelId = `checkbox-list-label-${value}`;
 
+        return (
+          <ListItem key={value} role={undefined} dense button onClick={handleToggle(value)}>
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={checked.indexOf(value) !== -1}
+                tabIndex={-1}
+                disableRipple
+                inputProps={{ 'aria-labelledby': labelId }}
+              />
+            </ListItemIcon>
+            <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="comments">
+                <CommentIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        );
+      })}
+    </List>
     </div>
   );
 }
