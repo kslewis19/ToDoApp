@@ -59,15 +59,26 @@ function App() {
     setChecked(newChecked);
   };
 
-  const handleEdit = (value) => () => {
+  const handleEditToggle = (value, text) => () => {
     const currentIndex = tasks.indexOf(value);
     const newTasks = [...tasks];
-      console.log(newTasks[currentIndex])
+     
     newTasks[currentIndex].isEditing=!newTasks[currentIndex].isEditing
-    console.log(newTasks[currentIndex])
+    newTasks[currentIndex].text= text
+
     setTasks(newTasks);
   };
+  const handleEdit = (newValue, value) => () => {
+    console.log("edited")
+    const currentIndex = tasks.indexOf(value);
+    const newTasks = [...tasks];
+     
+    newTasks[currentIndex].value=newValue
+    
 
+    //setTasks(newTasks);
+  };
+  
   return (
     <div className="app">
       
@@ -93,7 +104,7 @@ function App() {
           
 
           return (
-            <TodoListItem value={value} handleToggle={handleToggle} lableId= {labelId} checked= {checked} handleEdit= {handleEdit}/>
+            <TodoListItem value={value} handleToggle={handleToggle} lableId= {labelId} checked= {checked} handleEditToggle= {handleEditToggle} handleEdit= {handleEdit}/>
           );
 
         })}

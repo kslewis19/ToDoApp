@@ -16,12 +16,29 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { SignalCellularNullOutlined } from '@material-ui/icons';
 
 function TodoListItem (props) {
-  
+  const [text, setText] = useState("")
+  const handleSubmitEdit = (event) => {
+    event.preventDefault();
+    console.log(event)
+    props.handleEditToggle(props.value)
+    props.handleEdit(event.target.value, props.value)
+    //console.log(props)
+  }
+  const handleChange = (event)=>{
+      setText(event.target.value)
+  }
    var noEdit= <ListItemText id={props.labelId} primary={`${props.value.text}`} />
-   var edit= <div> put text book here</div>
+   var edit= <div> 
+     <form >
+          <input name='value' placeholder="enter new note" onChange={handleChange}>
+          </input>
+          <button onClick= {props.handleEdit(text, props.value)}>change</button>
+        </form>
+   </div>
     return(
-      <ListItem key={props.value.id} role={undefined} dense button onClick={props.handleToggle(props.value)}>
+      <ListItem key={props.value.id} role={undefined} >
       <ListItemIcon>
+      <IconButton edge="end" aria-label="comments" onClick={props.handleToggle(props.value)}>
         <Checkbox
           edge="start"
           checked={props.checked.indexOf(props.value) !== -1}
@@ -29,10 +46,12 @@ function TodoListItem (props) {
           disableRipple
           inputProps={{ 'aria-labelledby': props.labelId }}
         />
+         </IconButton>
       </ListItemIcon>
+      
       {props.value.isEditing? edit: noEdit}
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="comments" onClick={props.handleEdit(props.value)}>
+        <IconButton edge="end" aria-label="comments" onClick={props.handleEditToggle(props.value,text)}>
         <CommentIcon />
         </IconButton>
         <IconButton edge="center" aria-label="comments">
