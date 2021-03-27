@@ -16,25 +16,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { SignalCellularNullOutlined } from '@material-ui/icons';
 
 function TodoListItem (props) {
-  const [text, setText] = useState("")
-  const handleSubmitEdit = (event) => {
-    event.preventDefault();
-    console.log(event)
-    props.handleEditToggle(props.value)
-    props.handleEdit(event.target.value, props.value)
-    //console.log(props)
-  }
+  const [text, setText] = useState(props.value.text)
+  
   const handleChange = (event)=>{
       setText(event.target.value)
   }
    var noEdit= <ListItemText id={props.labelId} primary={`${props.value.text}`} />
    var edit= <div> 
-     <form >
-          <input name='value' placeholder="enter new note" onChange={handleChange}>
-          </input>
-          <button onClick= {props.handleEdit(text, props.value)}>change</button>
-        </form>
-   </div>
+              <input name='value' value= {text} onChange={handleChange}>
+              </input>
+         </div>
     return(
       <ListItem key={props.value.id} role={undefined} >
       <ListItemIcon>
