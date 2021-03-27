@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState } from "react"
+import TodoListItem from './TodoListItem'
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,7 +19,7 @@ import { SignalCellularNullOutlined } from '@material-ui/icons';
 
 function App() {
   const [tasks, setTasks] = useState([{}])
-
+  const [notes, setNotes] = useState([{}])
   const [checked, setChecked] = React.useState([0]);
 
 
@@ -32,6 +33,18 @@ function App() {
     
     
   }
+  const handleSubmitNote = (event) => {
+    event.preventDefault()
+    console.log(event.target.value)
+    setNotes(notes.concat({
+      id: Math.floor(Math.random()*10000),
+      text: event.target.value.value,
+      isEditing: false
+    }))
+    
+    
+  }
+
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -46,14 +59,22 @@ function App() {
     setChecked(newChecked);
   };
 
+  const handleEdit = (value) => () => {
+    const currentIndex = tasks.indexOf(value);
+    const newTasks = [...tasks];
+      console.log(newTasks[currentIndex])
+    newTasks[currentIndex].isEditing=!newTasks[currentIndex].isEditing
+    console.log(newTasks[currentIndex])
+    setTasks(newTasks);
+  };
 
   return (
     <div className="app">
       
 
       <List className="todolist">
-
       
+      <h1>Things To Do</h1>
         <form method="post" onSubmit={handleSubmit}>
           <input name='value' placeholder="enter new task">
           </input>
@@ -72,47 +93,28 @@ function App() {
           
 
           return (
-            <ListItem key={value.id} role={undefined} dense button onClick={handleToggle(value)}>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={checked.indexOf(value) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ 'aria-labelledby': labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={`${value.text}`} />
-              <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="comments">
-                <CommentIcon />
-                </IconButton>
-                <IconButton edge="center" aria-label="comments">
-
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-              
-            </ListItem>
+            <TodoListItem value={value} handleToggle={handleToggle} lableId= {labelId} checked= {checked} handleEdit= {handleEdit}/>
           );
+
         })}
       </List>
       <List className="noteslist">
-      {[0, 1, 2, 3].map((value) => {
-        const labelId = `checkbox-list-label-${value}`;
+      <h1>Notes</h1>
+      <form method="post" onSubmit={handleSubmitNote}>
+          <input name='value' placeholder="enter new note">
+          </input>
+          <button type="submit">Add Note</button>
+        </form>
 
+      {notes.map((value) => {
+         if(value.id==null){
+          return(null)
+        }
+
+        const labelId = `checkbox-list-label-${value}`;
         return (
-          <ListItem key={value} role={undefined} dense button onClick={handleToggle(value)}>
-            <ListItemIcon>
-              <Checkbox
-                edge="start"
-                checked={checked.indexOf(value) !== -1}
-                tabIndex={-1}
-                disableRipple
-                inputProps={{ 'aria-labelledby': labelId }}
-              />
-            </ListItemIcon>
-            <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+          <ListItem key={value.id} role={undefined} >
+            <ListItemText id={labelId} primary={`${value.text}`} />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="comments">
                 <CommentIcon />
