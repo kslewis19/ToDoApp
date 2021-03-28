@@ -30,17 +30,21 @@ function TodoListItem (props) {
          </div>
     return(
       <ListItem key={props.value.id} role={undefined} >
-      <ListItemIcon>
-      <IconButton edge="end" aria-label="comments" onClick={props.handleToggle(props.value)}>
+      <IconButton edge="center" aria-label="comments">
+        <FiArrowDown/>
+        </IconButton>
+        <IconButton edge="center" aria-label="comments">
+        <FiArrowUp/>
+        </IconButton>
+      <IconButton edge="end"  onClick={props.handleToggle(props.value)}>
         <Checkbox
           edge="start"
           checked={props.checked.indexOf(props.value) !== -1}
-          tabIndex={-1}
           disableRipple
-          inputProps={{ 'aria-labelledby': props.labelId }}
+          
         />
          </IconButton>
-      </ListItemIcon>
+      
       
       {props.value.isEditing? edit: noEdit}
       <ListItemSecondaryAction>
@@ -50,12 +54,7 @@ function TodoListItem (props) {
         <IconButton edge="center" aria-label="comments">
           <DeleteIcon />
         </IconButton>
-        <IconButton edge="center" aria-label="comments">
-        <FiArrowDown/>
-        </IconButton>
-        <IconButton edge="center" aria-label="comments">
-        <FiArrowUp/>
-        </IconButton>
+        
       </ListItemSecondaryAction>
       
     </ListItem>
