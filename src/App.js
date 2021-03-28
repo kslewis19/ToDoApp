@@ -28,22 +28,22 @@ function App() {
     event.preventDefault()
     console.log(event.target.value)
     setTasks(tasks.concat({
-      id: Math.floor(Math.random()*10000),
+      id: Math.floor(Math.random() * 10000),
       text: event.target.value.value
     }))
-    
-    
+
+
   }
   const handleSubmitNote = (event) => {
     event.preventDefault()
     console.log(event.target.value)
     setNotes(notes.concat({
-      id: Math.floor(Math.random()*10000),
+      id: Math.floor(Math.random() * 10000),
       text: event.target.value.value,
       isEditing: false
     }))
-    
-    
+
+
   }
 
 
@@ -63,9 +63,9 @@ function App() {
   const handleEditToggle = (value, text) => () => {
     const currentIndex = tasks.indexOf(value);
     const newTasks = [...tasks];
-     
-    newTasks[currentIndex].isEditing=!newTasks[currentIndex].isEditing
-    newTasks[currentIndex].text= text
+
+    newTasks[currentIndex].isEditing = !newTasks[currentIndex].isEditing
+    newTasks[currentIndex].text = text
 
     setTasks(newTasks);
   };
@@ -73,73 +73,73 @@ function App() {
     console.log("edited")
     const currentIndex = tasks.indexOf(value);
     const newTasks = [...tasks];
-     
-    newTasks[currentIndex].value=newValue
-    
+
+    newTasks[currentIndex].value = newValue
+
 
     //setTasks(newTasks);
   };
-  
+
   return (
     <div className="app">
-      
+
 
       <List className="todolist">
-      
-      <h1>Things To Do</h1>
+
+        <h1>Things To Do</h1>
         <form method="post" onSubmit={handleSubmit}>
           <TextField name='value' placeholder="enter new task" >
           </TextField>
           <Button type="submit" variant="contained">Add Task</Button>
         </form>
-      
+
 
         {tasks.map((value) => {
-          if(value.id==null){
-            return(null)
+          if (value.id == null) {
+            return (null)
           }
 
           //could add check filter here
 
           const labelId = `checkbox-list-label-${value.id}`;
-          
+
 
           return (
-            <TodoListItem value={value} handleToggle={handleToggle} lableId= {labelId} checked= {checked} handleEditToggle= {handleEditToggle} handleEdit= {handleEdit}/>
+            <TodoListItem value={value} handleToggle={handleToggle} lableId={labelId} checked={checked} handleEditToggle={handleEditToggle} handleEdit={handleEdit} />
           );
 
         })}
       </List>
       <List className="noteslist">
-      <h1>Notes</h1>
-      <form method="post" onSubmit={handleSubmitNote}>
+        <h1>Notes</h1>
+        <form method="post" onSubmit={handleSubmitNote}>
           <TextField name='value' placeholder="enter new note">
           </TextField>
           <Button type="submit" variant="contained">Add Note</Button>
         </form>
 
-      {notes.map((value) => {
-         if(value.id==null){
-          return(null)
-        }
+        {notes.map((value) => {
+          if (value.id == null) {
+            return (null)
+          }
 
-        const labelId = `checkbox-list-label-${value}`;
-        return (
-          <ListItem key={value.id} role={undefined} >
-            <ListItemText id={labelId} primary={`${value.text}`} />
-            <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="comments">
-                <CommentIcon />
-              </IconButton>
-              <IconButton edge="center" aria-label="comments">
-              <DeleteIcon />
+          const labelId = `checkbox-list-label-${value}`;
+          return (
+            <ListItem key={value.id} role={undefined} >
+              <ListItemText id={labelId} primary={`${value.text}`} />
+              <ListItemSecondaryAction>
+                <IconButton edge="end" aria-label="comments">
+                  <CommentIcon />
                 </IconButton>
-                
-            </ListItemSecondaryAction>
-          </ListItem>
-        );
-      })}
-    </List>
+                <IconButton edge="center" aria-label="comments">
+                  <DeleteIcon />
+                </IconButton>
+
+              </ListItemSecondaryAction>
+            </ListItem>
+          );
+        })}
+      </List>
     </div>
   );
 }
