@@ -22,6 +22,7 @@ function App() {
   const [tasks, setTasks] = useState([{}])
   const [notes, setNotes] = useState([{}])
   const [checked, setChecked] = React.useState([0]);
+  const [filterTasks, setFilterTasks] = useState(false)
 
 
   const handleSubmit = (event) => {
@@ -69,17 +70,10 @@ function App() {
 
     setTasks(newTasks);
   };
-  const handleEdit = (newValue, value) => () => {
-    console.log("edited")
-    const currentIndex = tasks.indexOf(value);
-    const newTasks = [...tasks];
-
-    newTasks[currentIndex].value = newValue
-
-
-    //setTasks(newTasks);
-  };
-
+  
+  const handleTaskFilter=() =>{
+    setFilterTasks(!filterTasks)
+  }
   return (
     <div className="app">
 
@@ -91,21 +85,25 @@ function App() {
           <TextField name='value' placeholder="enter new task" >
           </TextField>
           <Button type="submit" variant="contained">Add Task</Button>
+          <Checkbox
+          edge="start"
+          checked={filterTasks}
+          onClick = {handleTaskFilter}
+          disableRipple
+
+        />
         </form>
 
 
         {tasks.map((value) => {
-          if (value.id == null) {
+          if (value.id == null||(filterTasks==true &&checked.indexOf(value)!==-1)) {
             return (null)
           }
-
-          //could add check filter here
-
           const labelId = `checkbox-list-label-${value.id}`;
 
 
           return (
-            <TodoListItem value={value} handleToggle={handleToggle} lableId={labelId} checked={checked} handleEditToggle={handleEditToggle} handleEdit={handleEdit} />
+            <TodoListItem value={value} handleToggle={handleToggle} lableId={labelId} checked={checked} handleEditToggle={handleEditToggle}  />
           );
 
         })}

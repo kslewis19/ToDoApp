@@ -23,9 +23,10 @@ function TodoListItem(props) {
   const handleChange = (event) => {
     setText(event.target.value)
   }
+  
   var noEdit = <ListItemText id={props.labelId} primary={`${props.value.text}`} />
   var edit = <div>
-    <input name='value' value={text} onChange={handleChange}>
+    <input name='value' value={text} onChange={handleChange} >
     </input>
   </div>
   return (
