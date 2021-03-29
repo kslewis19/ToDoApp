@@ -24,7 +24,7 @@ function App() {
   const [notes, setNotes] = useState([{}])
   const [checked, setChecked] = React.useState([0]);
   const [filterTasks, setFilterTasks] = useState(false)
-
+  const [filterNotes, setFilterNotes] = useState(false)
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -103,6 +103,11 @@ function App() {
   const handleTaskFilter=() =>{
     setFilterTasks(!filterTasks)
   }
+  const handleNotesFilter=() =>{
+
+    setFilterNotes(!filterNotes)
+    console.log(filterNotes)
+  }
   return (
     <div className="app">
 
@@ -119,8 +124,8 @@ function App() {
           checked={filterTasks}
           onClick = {handleTaskFilter}
           disableRipple
-
         />
+         Hide completed
         </form>
 
 
@@ -143,10 +148,18 @@ function App() {
           <TextField name='value' placeholder="enter new note">
           </TextField>
           <Button type="submit" variant="contained">Add Note</Button>
+          <Checkbox
+          edge="start"
+          checked={filterNotes}
+          onClick = {handleNotesFilter}
+          disableRipple
+        />
+        Only Stared
+    
         </form>
 
         {notes.map((value) => {
-          if (value.id == null) {
+          if (value.id == null ||(filterNotes==true && value.star==false)) {
             return (null)
           }
 
