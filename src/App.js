@@ -16,6 +16,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { SignalCellularNullOutlined } from '@material-ui/icons';
 import { TextField } from '@material-ui/core';
+import NoteListItem from './NoteListItem';
 
 
 function App() {
@@ -30,7 +31,8 @@ function App() {
     console.log(event.target.value)
     setTasks(tasks.concat({
       id: Math.floor(Math.random() * 10000),
-      text: event.target.value.value
+      text: event.target.value.value,
+      isEditing: false
     }))
 
 
@@ -70,6 +72,21 @@ function App() {
 
     setTasks(newTasks);
   };
+  const handleEditToggleNotes = (value, text) => () => {
+    const currentIndex = notes.indexOf(value);
+    const newNotes = [...notes];
+    
+    newNotes[currentIndex].isEditing = !newNotes[currentIndex].isEditing
+    newNotes[currentIndex].text = text
+
+    setNotes(newNotes);
+  };
+  const deleteTask= (value)=>{
+    const currentIndex = tasks.indexOf(value);
+    const newTasks = [...tasks];
+    newTasks.splice(currentIndex, 1);
+    setTasks(newTasks)
+  }
   
   const handleTaskFilter=() =>{
     setFilterTasks(!filterTasks)
@@ -103,7 +120,7 @@ function App() {
 
 
           return (
-            <TodoListItem value={value} handleToggle={handleToggle} lableId={labelId} checked={checked} handleEditToggle={handleEditToggle}  />
+            <TodoListItem value={value} handleToggle={handleToggle} lableId={labelId} checked={checked} handleEditToggle={handleEditToggle} handleDelete= {deleteTask} />
           );
 
         })}
@@ -123,18 +140,7 @@ function App() {
 
           const labelId = `checkbox-list-label-${value}`;
           return (
-            <ListItem key={value.id} role={undefined} >
-              <ListItemText id={labelId} primary={`${value.text}`} />
-              <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="comments">
-                  <CommentIcon />
-                </IconButton>
-                <IconButton edge="center" aria-label="comments">
-                  <DeleteIcon />
-                </IconButton>
-
-              </ListItemSecondaryAction>
-            </ListItem>
+            <NoteListItem labelId={labelId} value={value} handleEditToggleNotes={handleEditToggleNotes}/>
           );
         })}
       </List>

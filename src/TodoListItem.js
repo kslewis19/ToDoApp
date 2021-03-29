@@ -52,7 +52,7 @@ function TodoListItem(props) {
         <IconButton edge="end" aria-label="comments" onClick={props.handleEditToggle(props.value, text)}>
           <CommentIcon />
         </IconButton>
-        <IconButton edge="center" aria-label="comments">
+        <IconButton edge="center" aria-label="comments" onClick={()=>{props.handleDelete(props.value)}} >
           <DeleteIcon />
         </IconButton>
 
