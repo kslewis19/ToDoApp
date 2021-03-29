@@ -87,7 +87,19 @@ function App() {
     newTasks.splice(currentIndex, 1);
     setTasks(newTasks)
   }
-  
+  const deleteNote= (value)=>{
+    const currentIndex = notes.indexOf(value);
+    const newNotes = [...notes];
+    newNotes.splice(currentIndex, 1);
+    setNotes(newNotes)
+  }
+  const toggleStar= (value)=>{
+    console.log("srar")
+    const currentIndex = notes.indexOf(value);
+    const newNotes = [...notes];
+    newNotes[currentIndex].star = !newNotes[currentIndex].star
+    setNotes(newNotes)
+  }
   const handleTaskFilter=() =>{
     setFilterTasks(!filterTasks)
   }
@@ -140,7 +152,7 @@ function App() {
 
           const labelId = `checkbox-list-label-${value}`;
           return (
-            <NoteListItem labelId={labelId} value={value} handleEditToggleNotes={handleEditToggleNotes}/>
+            <NoteListItem labelId={labelId} value={value} handleEditToggleNotes={handleEditToggleNotes} handleDelete= {deleteNote} handleStarToggle={toggleStar}/>
           );
         })}
       </List>

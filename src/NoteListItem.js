@@ -16,10 +16,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { SignalCellularNullOutlined } from '@material-ui/icons';
 import { FiArrowDown } from "react-icons/fi";
 import { FiArrowUp } from "react-icons/fi";
+import StarRatingComponent from 'react-star-rating-component';
 
 function NoteListItem(props){
     const [text, setText] = useState(props.value.text)
-
+    
     const handleChange = (event) => {
         setText(event.target.value)
       }
@@ -37,13 +38,19 @@ function NoteListItem(props){
       <IconButton edge="center" aria-label="comments">
         <FiArrowUp />
       </IconButton>
+      <StarRatingComponent
+            starCount={1} 
+            value= {props.value.star}
+            onStarClick={()=>{props.handleStarToggle(props.value)}}
+
+     />
       {props.value.isEditing ? edit : noEdit}
               
               <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="comments" onClick={props.handleEditToggleNotes(props.value, text)}>
                   <CommentIcon />
                 </IconButton>
-                <IconButton edge="center" aria-label="comments">
+                <IconButton edge="center" aria-label="comments" onClick={()=>{props.handleDelete(props.value)}} >
                   <DeleteIcon />
                 </IconButton>
 
