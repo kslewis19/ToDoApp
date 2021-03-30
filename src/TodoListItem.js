@@ -19,14 +19,20 @@ import { FiArrowUp } from "react-icons/fi";
 
 function TodoListItem(props) {
   const [text, setText] = useState(props.value.text)
-
+  
   const handleChange = (event) => {
     setText(event.target.value)
+  }
+  const keyPress = (event)=>{
+    if (event.which == 13){
+      console.log("pressed")
+     props.handleEditToggle(props.value, text)()
+  }
   }
   
   var noEdit = <ListItemText id={props.labelId} primary={`${props.value.text}`} />
   var edit = <div>
-    <input name='value' value={text} onChange={handleChange} >
+    <input name='value' value={text} onChange={handleChange} onKeyDown= {keyPress} >
     </input>
   </div>
   return (
@@ -52,7 +58,7 @@ function TodoListItem(props) {
         <IconButton edge="end" aria-label="comments" onClick={props.handleEditToggle(props.value, text)}>
           <CommentIcon />
         </IconButton>
-        <IconButton edge="center" aria-label="comments" onClick={()=>{props.handleDelete(props.value)}} >
+        <IconButton edge="center" aria-label="comments" onClick={props.handleDelete(props.value)} >
           <DeleteIcon />
         </IconButton>
 

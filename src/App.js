@@ -66,7 +66,7 @@ function App() {
   const handleEditToggle = (value, text) => () => {
     const currentIndex = tasks.indexOf(value);
     const newTasks = [...tasks];
-
+    console.log("toggled")
     newTasks[currentIndex].isEditing = !newTasks[currentIndex].isEditing
     newTasks[currentIndex].text = text
 
@@ -81,20 +81,19 @@ function App() {
 
     setNotes(newNotes);
   };
-  const deleteTask= (value)=>{
+  const deleteTask= (value)=> ()=>{
     const currentIndex = tasks.indexOf(value);
     const newTasks = [...tasks];
     newTasks.splice(currentIndex, 1);
     setTasks(newTasks)
   }
-  const deleteNote= (value)=>{
+  const deleteNote= (value) => ()=>{
     const currentIndex = notes.indexOf(value);
     const newNotes = [...notes];
     newNotes.splice(currentIndex, 1);
     setNotes(newNotes)
   }
   const toggleStar= (value)=>{
-    console.log("srar")
     const currentIndex = notes.indexOf(value);
     const newNotes = [...notes];
     newNotes[currentIndex].star = !newNotes[currentIndex].star
