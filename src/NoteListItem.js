@@ -37,10 +37,10 @@ function NoteListItem(props){
       </div>
     return(
         <ListItem key={props.value.id} role={undefined} >
-              <IconButton edge="center" aria-label="comments">
+      <IconButton edge="center" aria-label="comments" onClick= {props.moveDown(props.value)}>
         <FiArrowDown />
       </IconButton>
-      <IconButton edge="center" aria-label="comments">
+      <IconButton edge="center" aria-label="comments" onClick= {props.moveUp(props.value)}>
         <FiArrowUp />
       </IconButton>
       <StarRatingComponent
@@ -52,7 +52,9 @@ function NoteListItem(props){
       {props.value.isEditing ? edit : noEdit}
               
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="comments" onClick={props.handleEditToggleNotes(props.value, text)}>
+                <IconButton edge="end" aria-label="comments" onClick={()=>{
+                   setText(props.value.text)
+                  props.handleEditToggleNotes(props.value, text)}}>
                   <CommentIcon />
                 </IconButton>
                 <IconButton edge="center" aria-label="comments" onClick={props.handleDelete(props.value)} >

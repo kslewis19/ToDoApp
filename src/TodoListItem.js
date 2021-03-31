@@ -37,10 +37,10 @@ function TodoListItem(props) {
   </div>
   return (
     <ListItem key={props.value.id} role={undefined} >
-      <IconButton edge="center" aria-label="comments">
+      <IconButton edge="center" aria-label="comments" onClick= {props.moveDown(props.value)}>
         <FiArrowDown />
       </IconButton>
-      <IconButton edge="center" aria-label="comments">
+      <IconButton edge="center" aria-label="comments" onClick= {props.moveUp(props.value)}>
         <FiArrowUp />
       </IconButton>
       <IconButton edge="end" onClick={props.handleToggle(props.value)}>
@@ -55,7 +55,9 @@ function TodoListItem(props) {
 
       {props.value.isEditing ? edit : noEdit}
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="comments" onClick={props.handleEditToggle(props.value, text)}>
+        <IconButton edge="end" aria-label="comments" onClick={()=>{
+          setText(props.value.text)
+          props.handleEditToggle(props.value, text)}}>
           <CommentIcon />
         </IconButton>
         <IconButton edge="center" aria-label="comments" onClick={props.handleDelete(props.value)} >

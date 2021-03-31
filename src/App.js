@@ -20,9 +20,9 @@ import NoteListItem from './NoteListItem';
 
 
 function App() {
-  const [tasks, setTasks] = useState([{}])
-  const [notes, setNotes] = useState([{}])
-  const [checked, setChecked] = React.useState([0]);
+  const [tasks, setTasks] = useState([])
+  const [notes, setNotes] = useState([])
+  const [checked, setChecked] = useState([0]);
   const [filterTasks, setFilterTasks] = useState(false)
   const [filterNotes, setFilterNotes] = useState(false)
 
@@ -63,7 +63,7 @@ function App() {
     setChecked(newChecked);
   };
 
-  const handleEditToggle = (value, text) => () => {
+  const handleEditToggle = (value, text)  => {
     const currentIndex = tasks.indexOf(value);
     const newTasks = [...tasks];
     console.log("toggled")
@@ -72,7 +72,7 @@ function App() {
 
     setTasks(newTasks);
   };
-  const handleEditToggleNotes = (value, text) => () => {
+  const handleEditToggleNotes = (value, text)  => {
     const currentIndex = notes.indexOf(value);
     const newNotes = [...notes];
     
@@ -99,6 +99,51 @@ function App() {
     newNotes[currentIndex].star = !newNotes[currentIndex].star
     setNotes(newNotes)
   }
+  const moveUpTasks = (value)=>() =>{
+    const currentIndex = tasks.indexOf(value);
+    const newTasks = [...tasks];
+    if(currentIndex!=0){
+    const temp =newTasks [currentIndex-1]
+    newTasks[currentIndex -1]= value
+    newTasks[currentIndex]=temp
+    }
+    setTasks(newTasks)
+    console.log("up", currentIndex)
+  }
+  const moveDownTasks = (value)=>() =>{
+    const currentIndex = tasks.indexOf(value);
+    const newTasks = [...tasks];
+    if(currentIndex!=tasks.length-1){
+    const temp =newTasks [currentIndex+1]
+    newTasks[currentIndex +1]= value
+    newTasks[currentIndex]=temp
+    }
+    setTasks(newTasks)
+    console.log("down", currentIndex)
+  }
+  const moveUpNotes = (value)=>() =>{
+    const currentIndex = notes.indexOf(value);
+    const newNotes = [...notes];
+    if(currentIndex!=0){
+    const temp =newNotes[currentIndex-1]
+    newNotes[currentIndex -1]= value
+    newNotes[currentIndex]=temp
+    }
+    setNotes(newNotes)
+    console.log("up", currentIndex)
+  }
+  const moveDownNotes = (value)=>() =>{
+    const currentIndex = notes.indexOf(value);
+    const newNotes = [...notes];
+    if(currentIndex!=notes.length-1){
+    const temp =newNotes [currentIndex+1]
+    newNotes[currentIndex +1]= value
+    newNotes[currentIndex]=temp
+    }
+    setNotes(newNotes)
+    console.log("down", currentIndex)
+  }
+
   const handleTaskFilter=() =>{
     setFilterTasks(!filterTasks)
   }
@@ -129,14 +174,14 @@ function App() {
 
 
         {tasks.map((value) => {
-          if (value.id == null||(filterTasks==true &&checked.indexOf(value)!==-1)) {
+          if ((filterTasks==true &&checked.indexOf(value)!==-1)) {
             return (null)
           }
           const labelId = `checkbox-list-label-${value.id}`;
 
 
           return (
-            <TodoListItem value={value} handleToggle={handleToggle} lableId={labelId} checked={checked} handleEditToggle={handleEditToggle} handleDelete= {deleteTask} />
+            <TodoListItem value={value} handleToggle={handleToggle} lableId={labelId} checked={checked} handleEditToggle={handleEditToggle} handleDelete= {deleteTask} moveUp={moveUpTasks} moveDown={moveDownTasks} />
           );
 
         })}
@@ -158,13 +203,13 @@ function App() {
         </form>
 
         {notes.map((value) => {
-          if (value.id == null ||(filterNotes==true && value.star==false)) {
+          if ((filterNotes==true && value.star==false)) {
             return (null)
           }
 
           const labelId = `checkbox-list-label-${value}`;
           return (
-            <NoteListItem labelId={labelId} value={value} handleEditToggleNotes={handleEditToggleNotes} handleDelete= {deleteNote} handleStarToggle={toggleStar}/>
+            <NoteListItem labelId={labelId} value={value} handleEditToggleNotes={handleEditToggleNotes} handleDelete= {deleteNote} handleStarToggle={toggleStar} moveUp={moveUpNotes} moveDown= {moveDownNotes}/>
           );
         })}
       </List>
