@@ -25,6 +25,8 @@ function App() {
   const [checked, setChecked] = useState([0]);
   const [filterTasks, setFilterTasks] = useState(false)
   const [filterNotes, setFilterNotes] = useState(false)
+  const [taskText, setTaskText] = useState('')
+  const [noteText, setNoteText] = useState('')
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -34,7 +36,7 @@ function App() {
       text: event.target.value.value,
       isEditing: false
     }))
-
+    setTaskText('')
 
   }
   const handleSubmitNote = (event) => {
@@ -45,10 +47,8 @@ function App() {
       text: event.target.value.value,
       isEditing: false
     }))
-
-
+    setNoteText('')
   }
-
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -160,7 +160,7 @@ function App() {
 
         <h1>Things To Do</h1>
         <form method="post" onSubmit={handleSubmit}>
-          <TextField name='value' placeholder="enter new task" >
+          <TextField name='value' value={taskText} onChange={(event)=>{setTaskText(event.target.value)}} placeholder={'enter new task'} >
           </TextField>
           <Button type="submit" variant="contained">Add Task</Button>
           <Checkbox
@@ -189,7 +189,7 @@ function App() {
       <List className="noteslist">
         <h1>Notes</h1>
         <form method="post" onSubmit={handleSubmitNote}>
-          <TextField name='value' placeholder="enter new note">
+          <TextField name='value' value={noteText} onChange={(event)=>{setNoteText(event.target.value)}}placeholder="enter new note">
           </TextField>
           <Button type="submit" variant="contained">Add Note</Button>
           <Checkbox
